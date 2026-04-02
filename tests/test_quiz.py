@@ -41,7 +41,7 @@ def test_load_questions_reads_json_array(tmp_path: Path) -> None:
         {
             "prompt": "What is 2 + 2?",
             "options": ["3", "4", "5"],
-            "answer_index": 1,
+            "correct_answer": "4",
         }
     ]
 
@@ -52,6 +52,26 @@ def test_load_questions_reads_json_array(tmp_path: Path) -> None:
 
     assert len(questions) == 1
     assert questions[0].prompt == "What is 2 + 2?"
+    assert questions[0].answer_index == 1
+
+
+def test_load_questions_accepts_legacy_question_keys(tmp_path: Path) -> None:
+    payload = [
+        {
+            "problem": "Which protocol is connectionless?",
+            "answers": ["TCP", "UDP", "ICMP"],
+            "correct_answer": "UDP",
+        }
+    ]
+
+    file_path = tmp_path / "questions.json"
+    file_path.write_text(json.dumps(payload), encoding="utf-8")
+
+    questions = load_questions(file_path)
+
+    assert len(questions) == 1
+    assert questions[0].prompt == "Which protocol is connectionless?"
+    assert questions[0].options == ["TCP", "UDP", "ICMP"]
     assert questions[0].answer_index == 1
 
 
