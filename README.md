@@ -18,10 +18,12 @@ Questions are stored as a JSON array:
   {
     "prompt": "Which keyword defines a function in Python?",
     "options": ["func", "define", "def", "lambda"],
-    "answer_index": 2
+    "correct_answer": "def"
   }
 ]
 ```
+
+The loader also accepts the older `problem` / `answers` field names and can still read `answer_index` if you prefer index-based answers.
 
 ## Run it
 
