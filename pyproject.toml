@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "adaptive-learning-cli"
+version = "1.0.0"
+description = "A small interactive CLI for multiple-choice practice questions."
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "MIT" }
+authors = [
+  { name = "Nat Leo" }
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=8,<9"
+]
+
+[project.scripts]
+adaptive-learning = "adaptive_learning_cli.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
