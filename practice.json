@@ -1,204 +1,202 @@
 [
-    {
-        "problem": "Which layer of the TCP/IP model is responsible for routing packets between networks?",
-        "answers": [
-            "Application layer",
-            "Internet layer",
-            "Link layer"
-        ],
-        "correct_answer": "Internet layer"
-    },
-    {
-        "problem": "What is the primary purpose of TCP?",
-        "answers": [
-            "To provide reliable, connection-oriented data delivery",
-            "To assign IP addresses dynamically",
-            "To translate domain names into IP addresses"
-        ],
-        "correct_answer": "To provide reliable, connection-oriented data delivery"
-    },
-    {
-        "problem": "Which protocol is connectionless and does not guarantee delivery?",
-        "answers": [
-            "TCP",
-            "UDP",
-            "ARP"
-        ],
-        "correct_answer": "UDP"
-    },
-    {
-        "problem": "What does an IP address identify?",
-        "answers": [
-            "A specific process on a host",
-            "A network interface on a host",
-            "A physical switch port only"
-        ],
-        "correct_answer": "A network interface on a host"
-    },
-    {
-        "problem": "Which protocol is commonly used to translate a domain name like example.com into an IP address?",
-        "answers": [
-            "DNS",
-            "DHCP",
-            "FTP"
-        ],
-        "correct_answer": "DNS"
-    },
-    {
-        "problem": "What is the role of a subnet mask in IPv4?",
-        "answers": [
-            "It encrypts packet contents",
-            "It distinguishes the network portion from the host portion of an address",
-            "It guarantees packet delivery"
-        ],
-        "correct_answer": "It distinguishes the network portion from the host portion of an address"
-    },
-    {
-        "problem": "Which TCP flag is typically used to initiate a connection?",
-        "answers": [
-            "ACK",
-            "FIN",
-            "SYN"
-        ],
-        "correct_answer": "SYN"
-    },
-    {
-        "problem": "What is the purpose of the TCP three-way handshake?",
-        "answers": [
-            "To resolve a MAC address from an IP address",
-            "To establish a reliable connection between two hosts",
-            "To fragment large packets"
-        ],
-        "correct_answer": "To establish a reliable connection between two hosts"
-    },
-    {
-        "problem": "Which protocol is used to map an IPv4 address to a MAC address on a local network?",
-        "answers": [
-            "ARP",
-            "ICMP",
-            "SMTP"
-        ],
-        "correct_answer": "ARP"
-    },
-    {
-        "problem": "What does ICMP commonly support?",
-        "answers": [
-            "Email transfer between servers",
-            "Network diagnostics and error reporting",
-            "Reliable file transfer"
-        ],
-        "correct_answer": "Network diagnostics and error reporting"
-    },
-    {
-        "problem": "Which port number is the default for HTTP?",
-        "answers": [
-            "21",
-            "53",
-            "80"
-        ],
-        "correct_answer": "80"
-    },
-    {
-        "problem": "Which port number is the default for HTTPS?",
-        "answers": [
-            "25",
-            "110",
-            "443"
-        ],
-        "correct_answer": "443"
-    },
-    {
-        "problem": "What is the main function of DHCP?",
-        "answers": [
-            "To automatically assign IP configuration to hosts",
-            "To securely tunnel traffic over the internet",
-            "To cache web content in browsers"
-        ],
-        "correct_answer": "To automatically assign IP configuration to hosts"
-    },
-    {
-        "problem": "Which of the following best describes a socket?",
-        "answers": [
-            "A combination of IP address and port number",
-            "A physical connector on a network card",
-            "A routing table entry"
-        ],
-        "correct_answer": "A combination of IP address and port number"
-    },
-    {
-        "problem": "Why does TCP use sequence numbers?",
-        "answers": [
-            "To identify the encryption algorithm in use",
-            "To keep track of data ordering and retransmission",
-            "To assign IP addresses to clients"
-        ],
-        "correct_answer": "To keep track of data ordering and retransmission"
-    },
-    {
-        "problem": "What is packet fragmentation in IP?",
-        "answers": [
-            "Breaking a large packet into smaller pieces for transmission",
-            "Encrypting each packet separately",
-            "Dropping duplicate packets before delivery"
-        ],
-        "correct_answer": "Breaking a large packet into smaller pieces for transmission"
-    },
-    {
-        "problem": "Which device primarily operates at the Internet layer by forwarding packets between networks?",
-        "answers": [
-            "Router",
-            "Hub",
-            "Repeater"
-        ],
-        "correct_answer": "Router"
-    },
-    {
-        "problem": "What is the purpose of the FIN flag in TCP?",
-        "answers": [
-            "To indicate the sender wants to gracefully close the connection",
-            "To request a faster retransmission timeout",
-            "To advertise a larger receive window"
-        ],
-        "correct_answer": "To indicate the sender wants to gracefully close the connection"
-    },
-    {
-        "problem": "Which of the following is a private IPv4 address range?",
-        "answers": [
-            "8.8.8.0/24",
-            "192.168.0.0/16",
-            "172.0.0.0/8"
-        ],
-        "correct_answer": "192.168.0.0/16"
-    },
-    {
-        "problem": "What is NAT commonly used for?",
-        "answers": [
-            "To translate private internal addresses to a public address",
-            "To detect packet corruption on Ethernet frames",
-            "To assign MAC addresses to new devices"
-        ],
-        "correct_answer": "To translate private internal addresses to a public address"
-    }
-]
-[
-    {
-        "prompt": "Which keyword defines a function in Python?",
-        "options": [
-            "func",
-            "define",
-            "def",
-            "lambda"
-        ],
-        "answer_index": 2
-    },
-    {
-        "prompt": "What does FIFO stand for?",
-        "options": [
-            "First In, First Out",
-            "Fast Input, Fast Output",
-            "File In, File Out",
-            "First Input, Final Output"
-        ],
-        "answer_index": 0
-    }
+  {
+    "prompt": "Which layer of the TCP/IP model is responsible for routing packets between networks?",
+    "options": [
+      "Application layer",
+      "Internet layer",
+      "Link layer"
+    ],
+    "correct_answer": "Internet layer"
+  },
+  {
+    "prompt": "What is the primary purpose of TCP?",
+    "options": [
+      "To provide reliable, connection-oriented data delivery",
+      "To assign IP addresses dynamically",
+      "To translate domain names into IP addresses"
+    ],
+    "correct_answer": "To provide reliable, connection-oriented data delivery"
+  },
+  {
+    "prompt": "Which protocol is connectionless and does not guarantee delivery?",
+    "options": [
+      "TCP",
+      "UDP",
+      "ARP"
+    ],
+    "correct_answer": "UDP"
+  },
+  {
+    "prompt": "What does an IP address identify?",
+    "options": [
+      "A specific process on a host",
+      "A network interface on a host",
+      "A physical switch port only"
+    ],
+    "correct_answer": "A network interface on a host"
+  },
+  {
+    "prompt": "Which protocol is commonly used to translate a domain name like example.com into an IP address?",
+    "options": [
+      "DNS",
+      "DHCP",
+      "FTP"
+    ],
+    "correct_answer": "DNS"
+  },
+  {
+    "prompt": "What is the role of a subnet mask in IPv4?",
+    "options": [
+      "It encrypts packet contents",
+      "It distinguishes the network portion from the host portion of an address",
+      "It guarantees packet delivery"
+    ],
+    "correct_answer": "It distinguishes the network portion from the host portion of an address"
+  },
+  {
+    "prompt": "Which TCP flag is typically used to initiate a connection?",
+    "options": [
+      "ACK",
+      "FIN",
+      "SYN"
+    ],
+    "correct_answer": "SYN"
+  },
+  {
+    "prompt": "What is the purpose of the TCP three-way handshake?",
+    "options": [
+      "To resolve a MAC address from an IP address",
+      "To establish a reliable connection between two hosts",
+      "To fragment large packets"
+    ],
+    "correct_answer": "To establish a reliable connection between two hosts"
+  },
+  {
+    "prompt": "Which protocol is used to map an IPv4 address to a MAC address on a local network?",
+    "options": [
+      "ARP",
+      "ICMP",
+      "SMTP"
+    ],
+    "correct_answer": "ARP"
+  },
+  {
+    "prompt": "What does ICMP commonly support?",
+    "options": [
+      "Email transfer between servers",
+      "Network diagnostics and error reporting",
+      "Reliable file transfer"
+    ],
+    "correct_answer": "Network diagnostics and error reporting"
+  },
+  {
+    "prompt": "Which port number is the default for HTTP?",
+    "options": [
+      "21",
+      "53",
+      "80"
+    ],
+    "correct_answer": "80"
+  },
+  {
+    "prompt": "Which port number is the default for HTTPS?",
+    "options": [
+      "25",
+      "110",
+      "443"
+    ],
+    "correct_answer": "443"
+  },
+  {
+    "prompt": "What is the main function of DHCP?",
+    "options": [
+      "To automatically assign IP configuration to hosts",
+      "To securely tunnel traffic over the internet",
+      "To cache web content in browsers"
+    ],
+    "correct_answer": "To automatically assign IP configuration to hosts"
+  },
+  {
+    "prompt": "Which of the following best describes a socket?",
+    "options": [
+      "A combination of IP address and port number",
+      "A physical connector on a network card",
+      "A routing table entry"
+    ],
+    "correct_answer": "A combination of IP address and port number"
+  },
+  {
+    "prompt": "Why does TCP use sequence numbers?",
+    "options": [
+      "To identify the encryption algorithm in use",
+      "To keep track of data ordering and retransmission",
+      "To assign IP addresses to clients"
+    ],
+    "correct_answer": "To keep track of data ordering and retransmission"
+  },
+  {
+    "prompt": "What is packet fragmentation in IP?",
+    "options": [
+      "Breaking a large packet into smaller pieces for transmission",
+      "Encrypting each packet separately",
+      "Dropping duplicate packets before delivery"
+    ],
+    "correct_answer": "Breaking a large packet into smaller pieces for transmission"
+  },
+  {
+    "prompt": "Which device primarily operates at the Internet layer by forwarding packets between networks?",
+    "options": [
+      "Router",
+      "Hub",
+      "Repeater"
+    ],
+    "correct_answer": "Router"
+  },
+  {
+    "prompt": "What is the purpose of the FIN flag in TCP?",
+    "options": [
+      "To indicate the sender wants to gracefully close the connection",
+      "To request a faster retransmission timeout",
+      "To advertise a larger receive window"
+    ],
+    "correct_answer": "To indicate the sender wants to gracefully close the connection"
+  },
+  {
+    "prompt": "Which of the following is a private IPv4 address range?",
+    "options": [
+      "8.8.8.0/24",
+      "192.168.0.0/16",
+      "172.0.0.0/8"
+    ],
+    "correct_answer": "192.168.0.0/16"
+  },
+  {
+    "prompt": "What is NAT commonly used for?",
+    "options": [
+      "To translate private internal addresses to a public address",
+      "To detect packet corruption on Ethernet frames",
+      "To assign MAC addresses to new devices"
+    ],
+    "correct_answer": "To translate private internal addresses to a public address"
+  },
+  {
+    "prompt": "Which keyword defines a function in Python?",
+    "options": [
+      "func",
+      "define",
+      "def",
+      "lambda"
+    ],
+    "correct_answer": "def"
+  },
+  {
+    "prompt": "What does FIFO stand for?",
+    "options": [
+      "First In, First Out",
+      "Fast Input, Fast Output",
+      "File In, File Out",
+      "First Input, Final Output"
+    ],
+    "correct_answer": "First In, First Out"
+  }
 ]
