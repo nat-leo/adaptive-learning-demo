@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from .models import Question
-from .quiz import QuizState, apply_command
+from .models import Question, QuizState
+from .quiz import apply_command
 from .view import TerminalView
 
 
