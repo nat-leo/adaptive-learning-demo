@@ -11,8 +11,7 @@ if __package__ in {None, ""}:
 
     import adaptive_learning_cli.data as data
     from adaptive_learning_cli.controller import QuizController
-    from adaptive_learning_cli.models import QuizState
-    from adaptive_learning_cli.quiz import Command
+    from adaptive_learning_cli.models import QuizState, Command
     from adaptive_learning_cli.view import (
         TerminalView,
         draw_frame as _draw_frame,
@@ -23,8 +22,7 @@ if __package__ in {None, ""}:
 else:
     from . import data
     from .controller import QuizController
-    from .models import QuizState
-    from .quiz import Command
+    from .models import QuizState, Command
     from .view import (
         TerminalView,
         draw_frame as _draw_frame,
