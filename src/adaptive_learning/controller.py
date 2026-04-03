@@ -21,22 +21,6 @@ def apply_command(state: QuizState, command: Command) -> None:
         state.move_down()
 
 
-def simple_backoff(reintroduciton_streak: int) -> int | None:
-    """
-    Intentionally inverted vs classic SRS:
-    more misses/reintroductions -> shorter delay -> question appears sooner.
-
-    Returns an integer being the minimum number of problems that must be attempted
-    before the problem can be reintroduced. Streaks only last until 6 before the incorrect
-    question can be deleted.
-    """
-    streak = [2, 4, 8, 16, 32, 64]
-    if reintroduciton_streak >= len(streak):
-        raise ValueError(f"simple_backoff(): the streak is {reintroduciton_streak}, max streak is {len(streak)}. Past that the user has correct their mistakes.")
-
-    return streak[reintroduciton_streak]
-
-
 def _question_category(question: Question) -> str:
     if question.rating <= 33:
         return "easy"
@@ -70,6 +54,7 @@ class QuizController:
             self.score["correct"] += 1
             if tracked is not None:
                 tracked.mark_reintroduced()
+                tracked.schedule_next()
             session.questions_correct += 1
             self.user.score += 1
         else:
@@ -80,24 +65,28 @@ class QuizController:
                 )
                 self.user.incorrect_questions[question.id] = tracked
             tracked.mark_wrong()
-            tracked.schedule_next(simple_backoff)
+
+        for key, iq in self.user.incorrect_questions.items():
+            iq.mark_passed()
 
         self.score["attempted"] += 1
         session.questions_seen += 1
         self.user.attempts += 1
 
+    def select_question_by_id(self, id: str) -> Question:
+        for q in self.questions:
+            if q.id == id:
+                return q
+        raise IndexError(f"select_question_by_id(): id={id} not found in question bank.")
+
 
     def next_question(self) -> Question:
-        questions_by_id = {question.id: question for question in self.questions}
-        incorrect_candidates = [
-            questions_by_id[question_id]
-            for question_id in self.user.incorrect_questions
-            if question_id in questions_by_id
-        ]
-
-        if incorrect_candidates:
-            return incorrect_candidates[0]
-
+        if len(self.user.incorrect_questions) > 0:
+            for key_id, iq in self.user.incorrect_questions.items():
+                if iq.last_seen >= iq.due_in:
+                    return self.select_question_by_id(key_id)
+                else:
+                    return random.choice(self.questions)
         return random.choice(self.questions)
 
 

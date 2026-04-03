@@ -127,14 +127,14 @@ def render_incorrect_questions_summary(incorrect_questions: dict[str, IncorrectQ
 
     for question_id in sorted(incorrect_questions):
         item = incorrect_questions[question_id]
-        last_seen = item.last_seen.isoformat() if item.last_seen else "None"
+        last_seen = item.last_seen if item.last_seen else "None"
         due_in = str(item.due_in) if item.due_in else "None"
         lines.append(
             (
                 f"- {question_id}: category={item.category}, "
                 f"times_wrong={item.times_wrong}, "
                 f"times_seen_since_wrong={item.times_seen_since_wrong}, "
-                f"reintroduciton_streak={item.reintroduciton_streak}, "
+                f"reintroduction_streak={item.reintroduction_streak}, "
                 f"due_in={due_in}, "
                 f"last_seen={last_seen}"
             )

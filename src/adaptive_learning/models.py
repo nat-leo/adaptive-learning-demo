@@ -25,39 +25,62 @@ class IncorrectQuestion:
 
     question_id: Unique ID of the question.
     category: Topic label used for reporting/selection.
-    last_seen: Timestamp for the last presentation or answer event.
+    last_seen: An integer. Example: if last_seen=2, that means 2 questions have past since.
     due_in: Number of attempts before this question is eligible again.
     times_wrong: Total incorrect answers for this question.
     times_seen_since_wrong: Number of re-shows since first entering retry flow.
-    reintroduciton_streak: Consecutive reintroduction count used by backoff.
+    reintroduction_streak: Consecutive reintroduction count used by backoff.
     """
 
     question_id: str
     category: str
-    last_seen: datetime | None = None
-    due_in: int = 0 
+    last_seen: int = 0
+    due_in: int = 0
     times_wrong: int = 0
     times_seen_since_wrong: int = 0
-    reintroduciton_streak: int = 0
+    reintroduction_streak: int = 0
 
     def mark_wrong(self) -> None:
         """Call when user answers this question incorrectly."""
         self.times_wrong += 1
-        self.last_seen = datetime.now()
+        self.last_seen = 0
+        self.reintroduction_streak = 0
+
+    def mark_passed(self) -> None:
+        """
+        Call when previously missed questions haven't been selected. 
+        When last_seen >= due_in, that means the problem must be shown next.
+        """
+        self.last_seen += 1
 
     def mark_reintroduced(self) -> None:
         """Call when a previously-missed question is shown again."""
-        self.reintroduciton_streak += 1
+        self.reintroduction_streak += 1
         self.times_seen_since_wrong += 1
-        self.last_seen = datetime.now()
+        self.last_seen = 0
 
-    def schedule_next(self, backoff_fn: Callable[[int, int], datetime]) -> None:
+    def schedule_next(self) -> None:
         """
         Delegate spacing computation to the caller.
-        backoff_fn receives (reintroduciton_streak) and returns due_in.
+        backoff_fn receives (reintroduction_streak) and returns due_in.
         """
-        self.due_in = backoff_fn(self.reintroduciton_streak)
 
+        def simple_backoff(reintroduction_streak: int) -> int | None:
+            """
+            Intentionally inverted vs classic SRS:
+            more misses/reintroductions -> shorter delay -> question appears sooner.
+
+            Returns an integer being the minimum number of problems that must be attempted
+            before the problem can be reintroduced. Streaks only last until 6 before the incorrect
+            question can be deleted.
+            """
+            streak = [2, 4, 8, 16, 32, 64]
+            if reintroduction_streak >= len(streak):
+                return None
+            return streak[reintroduction_streak]
+        
+        self.due_in = simple_backoff(self.reintroduction_streak)
+        
 
     @classmethod
     def from_dict(cls, data: dict) -> IncorrectQuestion:
@@ -68,7 +91,7 @@ class IncorrectQuestion:
             due_in=data["due_in"] if data.get("due_in") else None,
             times_wrong=data.get("times_wrong", 0),
             times_seen_since_wrong=data.get("times_seen_since_wrong", 0),
-            reintroduciton_streak=data.get("reintroduciton_streak", 0),
+            reintroduction_streak=data.get("reintroduction_streak", 0),
         )
 
 
@@ -186,5 +209,6 @@ class QuizState:
     def is_correct(self) -> bool:
         selected_answer = self.question.answers[self.selected_index]
         return selected_answer == self.question.correct_answer
+
 
 Command = Literal["up", "down", "submit", "quit", "noop"]

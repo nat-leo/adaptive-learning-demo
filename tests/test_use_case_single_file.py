@@ -53,7 +53,7 @@ def test_run_attempt_incorrect_creates_retry_item() -> None:
     assert session.questions_correct == 0
     assert item.category == "graphs"
     assert item.times_wrong == 1
-    assert item.reintroduciton_streak == 0
+    assert item.reintroduction_streak == 0
     assert item.due_in == 2
     assert item.last_seen is not None
 
@@ -91,5 +91,5 @@ def test_present_question_does_not_change_retry_item_currently() -> None:
     present_question(user, "q4")
 
     item = user.incorrect_questions["q4"]
-    assert item.reintroduciton_streak == 0
+    assert item.reintroduction_streak == 0
     assert item.times_seen_since_wrong == 0
