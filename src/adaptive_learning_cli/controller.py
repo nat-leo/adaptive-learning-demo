@@ -1,9 +1,11 @@
 from __future__ import annotations
+from typing import Literal
 
 from .models import Question, QuizState
-from .quiz import Command
 from .view import TerminalView
 
+
+Command = Literal["up", "down", "submit", "quit", "noop"]
 
 def apply_command(state: QuizState, command: Command) -> None:
     if command == "up":
