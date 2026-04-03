@@ -65,13 +65,11 @@ class QuizController:
         session = self.user.sessions[self._session_id]
 
         tracked = self.user.incorrect_questions.get(question.id)
-        if tracked is not None:
-            tracked.mark_reintroduced()
 
         if is_correct:
             self.score["correct"] += 1
             if tracked is not None:
-                tracked.resolve()
+                tracked.mark_reintroduced()
             session.questions_correct += 1
             self.user.score += 1
         else:
@@ -88,15 +86,26 @@ class QuizController:
         session.questions_seen += 1
         self.user.attempts += 1
 
-    def next_question(self, incorrect: IncorrectQuestion) -> Question:
-        number = random.randint(0, len(self.questions) - 1)
-        return self.questions[number]
+
+    def next_question(self) -> Question:
+        questions_by_id = {question.id: question for question in self.questions}
+        incorrect_candidates = [
+            questions_by_id[question_id]
+            for question_id in self.user.incorrect_questions
+            if question_id in questions_by_id
+        ]
+
+        if incorrect_candidates:
+            return incorrect_candidates[0]
+
+        return random.choice(self.questions)
+
 
     def run(self) -> int:
         with self._view:
             number = 0
             while number < len(self.questions):
-                question = self.next_question(number)
+                question = self.next_question()
                 state = QuizState(question=question)
                 while True:
                     self._view.render_question(
