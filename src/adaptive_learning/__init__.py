@@ -1,5 +1,19 @@
 """Adaptive learning CLI package."""
 
-from .models import Question, QuizState
+from .models import (
+    IncorrectQuestion,
+    Question,
+    QuestionStatus,
+    QuizState,
+    SessionData,
+    User,
+)
 
-__all__ = ["Question", "QuizState"]
+__all__ = [
+    "IncorrectQuestion",
+    "Question",
+    "QuestionStatus",
+    "QuizState",
+    "SessionData",
+    "User",
+]

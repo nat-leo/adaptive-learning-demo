@@ -1,40 +1,97 @@
 from __future__ import annotations
-from dataclasses import dataclass
-from typing import Literal
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+from typing import Callable, Literal
 
-"""
-User Model
+class QuestionStatus(Enum):
+    ACTIVE = "active"
+    COOLDOWN = "cooldown"
+    MASTERED = "mastered"
+    SKIPPED = "skipped"
 
-Assume one user exists. Information collected on the user is used to create an adaptive
-learning environment by keeping track of wrong answers and making sure the user sees them
-more often.
 
-sessions: A session is everytime a user starts the adaptive learning CLI, and then 
-          quits. That information is recorded in the session.
+@dataclass
+class SessionData:
+    session_id: str
+    started_at: datetime
+    questions_seen: int = 0
+    questions_correct: int = 0
 
-          {
-           session: an integer that goes up. 
-           date: the datetime of the session start.
-           attempts: number of questions attempted.
-           score: number of questions correct.
-           incorrect: a list of ids of the questions that were incorrect.
-          }
 
-score: total number of questions correct by the user
-attempts: total number of questions attempted by the user
-incorrect_questions: incorrect questions need to be recorded, including its category
-                     and schedule to see it.
+@dataclass
+class IncorrectQuestion:
+    question_id: str
+    category: str
+    last_seen: datetime | None = None
+    next_due: datetime | None = None
+    times_wrong: int = 0
+    times_seen_since_wrong: int = 0
+    reintroduced_count: int = 0
+    status: QuestionStatus = QuestionStatus.ACTIVE
 
-"""
-@dataclass()
-class User:
-    score: int
-    attempts: int
-    incorrect_questions: dict
-    
+    def mark_wrong(self) -> None:
+        self.times_wrong += 1
+        self.last_seen = datetime.now()
+        self.status = QuestionStatus.ACTIVE
+
+    def mark_reintroduced(self) -> None:
+        self.reintroduced_count += 1
+        self.times_seen_since_wrong += 1
+        self.last_seen = datetime.now()
+
+    def schedule_next(self, backoff_fn: Callable[[int, int], datetime]) -> None:
+        self.next_due = backoff_fn(self.times_wrong, self.reintroduced_count)
+
+    def resolve(self, status: QuestionStatus = QuestionStatus.MASTERED) -> None:
+        self.status = status
+
     @classmethod
-    def from_dict():
-        pass
+    def from_dict(cls, data: dict) -> "IncorrectQuestion":
+        if not isinstance(data, dict):
+            raise ValueError("IncorrectQuestion must be a dictionary.")
+
+        return cls(
+            question_id=data["question_id"],
+            category=data["category"],
+            last_seen=datetime.fromisoformat(data["last_seen"]) if data.get("last_seen") else None,
+            next_due=datetime.fromisoformat(data["next_due"]) if data.get("next_due") else None,
+            times_wrong=data.get("times_wrong", 0),
+            times_seen_since_wrong=data.get("times_seen_since_wrong", 0),
+            reintroduced_count=data.get("reintroduced_count", 0),
+            status=QuestionStatus(data.get("status", QuestionStatus.ACTIVE.value)),
+        )
+
+
+@dataclass
+class User:
+    score: int = 0
+    attempts: int = 0
+    sessions: dict[str, SessionData] = field(default_factory=dict)
+    incorrect_questions: dict[str, IncorrectQuestion] = field(default_factory=dict)
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "User":
+        if not isinstance(data, dict):
+            raise ValueError("User payload must be a dictionary.")
+
+        return cls(
+            score=data.get("score", 0),
+            attempts=data.get("attempts", 0),
+            sessions={
+                sid: SessionData(
+                    session_id=sdata["session_id"],
+                    started_at=datetime.fromisoformat(sdata["started_at"]),
+                    questions_seen=sdata.get("questions_seen", 0),
+                    questions_correct=sdata.get("questions_correct", 0),
+                )
+                for sid, sdata in data.get("sessions", {}).items()
+            },
+            incorrect_questions={
+                qid: IncorrectQuestion.from_dict(qdata)
+                for qid, qdata in data.get("incorrect_questions", {}).items()
+            },
+        )
 
 """
 Question Model

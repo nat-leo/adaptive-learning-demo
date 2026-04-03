@@ -1,6 +1,15 @@
 from __future__ import annotations
 
-from .models import Question, QuizState, Command
+from datetime import datetime, timedelta
+
+from .models import (
+    Command,
+    IncorrectQuestion,
+    Question,
+    QuizState,
+    SessionData,
+    User,
+)
 from .view import TerminalView
 
 
@@ -11,14 +20,61 @@ def apply_command(state: QuizState, command: Command) -> None:
         state.move_down()
 
 
+def exponential_backoff(times_wrong: int, reintroduced_count: int) -> datetime:
+    delay_minutes = (2 ** reintroduced_count) * times_wrong
+    return datetime.now() + timedelta(minutes=delay_minutes)
+
+
+def _question_category(question: Question) -> str:
+    if question.rating <= 33:
+        return "easy"
+    if question.rating <= 66:
+        return "medium"
+    return "hard"
+
+
 class QuizController:
-    def __init__(self, *, questions: list[Question], view: TerminalView) -> None:
+    def __init__(self, *, questions: list[Question], view: TerminalView, user: User | None = None) -> None:
         self.questions = sorted(questions, key=lambda question: question.rating)
         self._view = view
+        self.user = User() if user is None else user
+        self._session_id = datetime.now().isoformat()
+        if self._session_id not in self.user.sessions:
+            self.user.sessions[self._session_id] = SessionData(
+                session_id=self._session_id,
+                started_at=datetime.now(),
+            )
         self.score = {
             "correct": 0,
             "attempted": 0
         }
+
+    def _record_attempt(self, question: Question, *, is_correct: bool) -> None:
+        session = self.user.sessions[self._session_id]
+
+        tracked = self.user.incorrect_questions.get(question.id)
+        if tracked is not None:
+            tracked.mark_reintroduced()
+
+        if is_correct:
+            self.score["correct"] += 1
+            if tracked is not None:
+                tracked.resolve()
+            session.questions_correct += 1
+            self.user.score += 1
+        else:
+            if tracked is None:
+                tracked = IncorrectQuestion(
+                    question_id=question.id,
+                    category=_question_category(question),
+                )
+                self.user.incorrect_questions[question.id] = tracked
+            tracked.mark_wrong()
+            tracked.schedule_next(exponential_backoff)
+
+        self.score["attempted"] += 1
+        session.questions_seen += 1
+        self.user.attempts += 1
 
     def run(self) -> int:
         with self._view:
@@ -44,9 +100,7 @@ class QuizController:
 
                     apply_command(state, command)
 
-                if state.is_correct():
-                    self.score["correct"] += 1
-                self.score["attempted"] += 1 
+                self._record_attempt(question, is_correct=state.is_correct())
 
                 self._view.render_question(
                     state,
@@ -64,4 +118,3 @@ class QuizController:
         self._view.clear_screen()
         self._view.show_final_score(self.score["correct"], self.score["attempted"])
         return 0
-
