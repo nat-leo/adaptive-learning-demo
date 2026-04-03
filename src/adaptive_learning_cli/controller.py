@@ -15,12 +15,19 @@ class QuizController:
     def __init__(self, *, questions: list[Question], view: TerminalView) -> None:
         self.questions = sorted(questions, key=lambda question: question.rating)
         self._view = view
-        self.user_score = 0
+        self.score = {
+            "correct": 0,
+            "attempted": 0
+        }
+    
+
+    def next_question(self):
+            return
+    
+    def total(self):
+        return self.score["correct"] + self.score["attempted"]
 
     def run(self) -> int:
-        score = 0
-        total_questions = len(self.questions)
-
         with self._view:
             for number, question in enumerate(self.questions, start=1):
                 state = QuizState(question=question)
@@ -29,13 +36,13 @@ class QuizController:
                     self._view.render_question(
                         state,
                         question_number=number,
-                        total_questions=total_questions,
+                        total_questions=self.total(),
                     )
                     command = self._view.read_command()
 
                     if command == "quit":
                         self._view.clear_screen()
-                        self._view.show_early_exit(score, total_questions)
+                        self._view.show_early_exit(self.score["correct"], self.total())
                         return 1
 
                     if command == "submit":
@@ -44,19 +51,21 @@ class QuizController:
                     apply_command(state, command)
 
                 if state.is_correct():
-                    score += 1
+                    self.score["correct"] += 1
+                else:
+                    self.score["attempts"] += 1 
 
                 self._view.render_question(
                     state,
                     question_number=number,
-                    total_questions=total_questions,
+                    total_questions=self.total(),
                 )
                 self._view.render_feedback(state)
                 if not self._view.wait_for_submit_or_quit():
                     self._view.clear_screen()
-                    self._view.show_early_exit(score, total_questions)
+                    self._view.show_early_exit(self.score["correct"], self.total())
                     return 1
 
         self._view.clear_screen()
-        self._view.show_final_score(score, total_questions)
+        self._view.show_final_score(self.score["correct"], self.total())
         return 0
