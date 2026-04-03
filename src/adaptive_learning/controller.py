@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+import random
+from datetime import datetime
 
 from .models import (
     Command,
@@ -18,7 +19,6 @@ def apply_command(state: QuizState, command: Command) -> None:
         state.move_up()
     elif command == "down":
         state.move_down()
-
 
 
 def simple_backoff(reintroduciton_streak: int) -> int | None:
@@ -88,11 +88,15 @@ class QuizController:
         session.questions_seen += 1
         self.user.attempts += 1
 
+    def next_question(self, incorrect: IncorrectQuestion) -> Question:
+        number = random.randint(0, len(self.questions) - 1)
+        return self.questions[number]
+
     def run(self) -> int:
         with self._view:
             number = 0
             while number < len(self.questions):
-                question = self.questions[number]
+                question = self.next_question(number)
                 state = QuizState(question=question)
                 while True:
                     self._view.render_question(
