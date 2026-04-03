@@ -68,6 +68,7 @@ class QuizState:
         self.selected_index = (self.selected_index + 1) % len(self.question.answers)
 
     def is_correct(self) -> bool:
-        return self.selected_index == self.question.correct_answer
+        selected_answer = self.question.answers[self.selected_index]
+        return selected_answer == self.question.correct_answer
 
 Command = Literal["up", "down", "submit", "quit", "noop"]
