@@ -47,7 +47,7 @@ def render_screen(
     answers: list[str],
     selected_index: int,
     *,
-    question_number: int = 1,
+    number_correct: int = 0,
     total_questions: int = 1,
 ) -> str:
     content_width = 60
@@ -80,7 +80,7 @@ def render_screen(
 
     lines = [
         "Adaptive Learning Demo",
-        f"Question {question_number} of {total_questions}",
+        f"Question {number_correct} of {total_questions}",
         "",
         *question_lines,
         "",
@@ -192,14 +192,14 @@ class TerminalView:
     def read_command(self) -> Command:
         return read_key(self.stdin)
 
-    def render_question(self, state: QuizState, question_number: int, total_questions: int) -> None:
+    def render_question(self, state: QuizState, number_correct: int, total_questions: int) -> None:
         draw_frame(
             self.stdout,
             render_screen(
                 question=state.question.prompt,
                 answers=state.question.answers,
                 selected_index=state.selected_index,
-                question_number=question_number,
+                number_correct=number_correct,
                 total_questions=total_questions,
             ),
         )
@@ -209,8 +209,7 @@ class TerminalView:
         if state.is_correct():
             self.stdout.write("Correct.\n")
         else:
-            correct_answer = state.question.answers[state.question.correct_answer]
-            self.stdout.write(f"Incorrect. Correct answer: {correct_answer}\n")
+            self.stdout.write(f"Incorrect. Correct answer: {state.question.correct_answer}\n")
         self.stdout.write("Press Enter to continue.\n")
         self.stdout.flush()
 
