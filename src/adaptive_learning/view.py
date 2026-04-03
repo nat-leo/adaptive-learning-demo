@@ -4,7 +4,7 @@ import os
 import sys
 import textwrap
 
-from .models import QuizState, Command
+from .models import QuizState, SessionData, Command
 
 if os.name == "nt":
     import msvcrt
@@ -88,6 +88,31 @@ def render_screen(
         "",
         HELP_TEXT,
     ]
+    return "\n".join(lines) + "\n"
+
+
+def render_session_summary(
+    session: SessionData,
+    *,
+    total_score: int | None = None,
+    total_attempts: int | None = None,
+) -> str:
+    accuracy = 0.0
+    if session.questions_seen > 0:
+        accuracy = (session.questions_correct / session.questions_seen) * 100
+
+    lines = [
+        "Session Summary",
+        f"Session ID: {session.session_id}",
+        f"Started At: {session.started_at.isoformat()}",
+        f"Questions Seen: {session.questions_seen}",
+        f"Questions Correct: {session.questions_correct}",
+        f"Session Accuracy: {accuracy:.1f}%",
+    ]
+
+    if total_score is not None and total_attempts is not None:
+        lines.append(f"Lifetime Score: {total_score}/{total_attempts}")
+
     return "\n".join(lines) + "\n"
 
 
@@ -227,4 +252,20 @@ class TerminalView:
 
     def show_final_score(self, score: int, total_questions: int) -> None:
         self.stdout.write(f"Final score: {score}/{total_questions}\n")
+        self.stdout.flush()
+
+    def show_session(
+        self,
+        session: SessionData,
+        *,
+        total_score: int | None = None,
+        total_attempts: int | None = None,
+    ) -> None:
+        self.stdout.write(
+            render_session_summary(
+                session,
+                total_score=total_score,
+                total_attempts=total_attempts,
+            )
+        )
         self.stdout.flush()

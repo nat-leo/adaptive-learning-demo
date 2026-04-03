@@ -104,6 +104,11 @@ class QuizController:
 
                     if command == "quit":
                         self._view.clear_screen()
+                        self._view.show_session(
+                            self.user.sessions[self._session_id],
+                            total_score=self.user.score,
+                            total_attempts=self.user.attempts,
+                        )
                         self._view.show_early_exit(self.score["correct"], self.score["attempted"])
                         return 1
 
@@ -122,11 +127,21 @@ class QuizController:
                 self._view.render_feedback(state)
                 if not self._view.wait_for_submit_or_quit():
                     self._view.clear_screen()
+                    self._view.show_session(
+                        self.user.sessions[self._session_id],
+                        total_score=self.user.score,
+                        total_attempts=self.user.attempts,
+                    )
                     self._view.show_early_exit(self.score["correct"], self.score["attempted"])
                     return 1
 
                 number += 1
 
         self._view.clear_screen()
+        self._view.show_session(
+            self.user.sessions[self._session_id],
+            total_score=self.user.score,
+            total_attempts=self.user.attempts,
+        )
         self._view.show_final_score(self.score["correct"], self.score["attempted"])
         return 0
