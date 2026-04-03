@@ -13,6 +13,15 @@ DEFAULT_QUESTIONS = [
     )
 ]
 
+def load_from_many(paths: list[Path] | None = None) -> list[Question]:
+    if paths is None:
+        return list(DEFAULT_QUESTIONS)
+
+    questions: list[Question] = []
+    for path in paths:
+        questions.extend(load_questions(path))
+
+    return questions
 
 def load_questions(path: Path | None = None) -> list[Question]:
     if path is None:

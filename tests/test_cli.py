@@ -18,7 +18,7 @@ if os.name != "nt":
 
 
 CLEAR_SCREEN = "\x1b[H\x1b[2J\x1b[3J"
-EXPECTED_INITIAL_SCREEN = """Adaptive Learning Demo\nQuestion 1 of 22\n\nWhich layer of the TCP/IP model is responsible for routing\npackets between networks?\n\n> Application layer\nInternet layer\nLink layer\n\nUse ↑/↓ or j/k to move, Enter to submit, q to quit."""
+EXPECTED_INITIAL_SCREEN = """Adaptive Learning Demo\nQuestion 1 of 60\n\nWhich layer of the TCP/IP model is responsible for routing\npackets between networks?\n\n> Application layer\nInternet layer\nLink layer\n\nUse ↑/↓ or j/k to move, Enter to submit, q to quit."""
 
 
 def _read_until(master_fd: int, pattern: str, timeout: float = 3.0) -> str:
@@ -83,7 +83,7 @@ def test_adaptive_learning_initial_screen_matches_expected_output() -> None:
     _set_terminal_size(slave_fd, width=120, height=24)
 
     process = subprocess.Popen(
-        [sys.executable, str(cli_path), str(repo_root / "practice.json")],
+        [sys.executable, str(cli_path)],
         stdin=slave_fd,
         stdout=slave_fd,
         stderr=slave_fd,

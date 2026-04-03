@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import argparse
 import os
 import sys
 import textwrap
@@ -11,10 +10,10 @@ if __package__ in {None, ""}:
     if str(SRC_ROOT) not in sys.path:
         sys.path.insert(0, str(SRC_ROOT))
 
-    from adaptive_learning_cli.data import load_questions
+    import adaptive_learning_cli.data as data
     from adaptive_learning_cli.quiz import Command, QuizState, apply_command
 else:
-    from .data import load_questions
+    from . import data
     from .quiz import Command, QuizState, apply_command
 
 if os.name == "nt":
@@ -40,20 +39,6 @@ class RawTerminal:
     def __exit__(self, exc_type, exc_value, traceback) -> None:
         if os.name != "nt":
             termios.tcsetattr(self._fd, termios.TCSADRAIN, self._old_settings)
-
-
-def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        prog="adaptive-learning",
-        description="Practice multiple-choice questions in the terminal.",
-    )
-    parser.add_argument(
-        "question_file",
-        nargs="?",
-        default="practice.json",
-        help="Path to a JSON file containing quiz questions.",
-    )
-    return parser
 
 
 def clear_screen() -> None:
@@ -224,9 +209,13 @@ def wait_for_enter() -> bool:
             return True
 
 
-def run_quiz(question_file: Path) -> int:
+def problem_files() -> list[Path]:
+    return sorted((SRC_ROOT / "problems").glob("*.json"))
+
+
+def run_quiz() -> int:
     ensure_interactive_terminal()
-    questions = load_questions(question_file)
+    questions = data.load_from_many(problem_files())
     score = 0
 
     with RawTerminal():
@@ -263,17 +252,17 @@ def run_quiz(question_file: Path) -> int:
 
 
 def main() -> int:
-    parser = build_parser()
-    args = parser.parse_args()
-
     try:
-        return run_quiz(Path(args.question_file))
+        return run_quiz()
     except FileNotFoundError as error:
-        parser.exit(status=2, message=f"{error}\n")
+        print(error, file=sys.stderr)
+        return 2
     except ValueError as error:
-        parser.exit(status=2, message=f"Invalid question file: {error}\n")
+        print(f"Invalid question file: {error}", file=sys.stderr)
+        return 2
     except RuntimeError as error:
-        parser.exit(status=2, message=f"{error}\n")
+        print(error, file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":

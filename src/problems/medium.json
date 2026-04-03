@@ -1,0 +1,202 @@
+[
+  {
+    "problem": "During the TCP three-way handshake, which sequence of flags is exchanged between client and server?",
+    "answers": [
+      "SYN \u2192 SYN-ACK \u2192 ACK",
+      "ACK \u2192 SYN \u2192 FIN",
+      "SYN \u2192 ACK \u2192 SYN-ACK"
+    ],
+    "correct_answer": "SYN \u2192 SYN-ACK \u2192 ACK",
+    "rating": 42
+  },
+  {
+    "problem": "What happens if a TCP packet is lost during transmission?",
+    "answers": [
+      "It is ignored and the connection continues",
+      "The sender retransmits the packet after timeout or duplicate ACKs",
+      "The receiver fills in missing data with zeros"
+    ],
+    "correct_answer": "The sender retransmits the packet after timeout or duplicate ACKs",
+    "rating": 44
+  },
+  {
+    "problem": "Which field in the TCP header is used for flow control?",
+    "answers": [
+      "Window size",
+      "Checksum",
+      "Urgent pointer"
+    ],
+    "correct_answer": "Window size",
+    "rating": 46
+  },
+  {
+    "problem": "What is the main purpose of the Time To Live (TTL) field in an IP packet?",
+    "answers": [
+      "To measure latency between hosts",
+      "To prevent packets from looping indefinitely in the network",
+      "To synchronize clocks between routers"
+    ],
+    "correct_answer": "To prevent packets from looping indefinitely in the network",
+    "rating": 48
+  },
+  {
+    "problem": "Which protocol is used to discover the path packets take across networks?",
+    "answers": [
+      "Traceroute (using ICMP or UDP)",
+      "FTP",
+      "SNMP"
+    ],
+    "correct_answer": "Traceroute (using ICMP or UDP)",
+    "rating": 50
+  },
+  {
+    "problem": "What is the primary function of the TCP congestion window (cwnd)?",
+    "answers": [
+      "To control how much data can be sent without acknowledgment",
+      "To encrypt TCP payloads",
+      "To assign port numbers dynamically"
+    ],
+    "correct_answer": "To control how much data can be sent without acknowledgment",
+    "rating": 52
+  },
+  {
+    "problem": "Which of the following best describes a TCP 'half-open' connection?",
+    "answers": [
+      "Both sides have closed the connection",
+      "One side has closed while the other still believes it is open",
+      "No SYN packet was ever sent"
+    ],
+    "correct_answer": "One side has closed while the other still believes it is open",
+    "rating": 54
+  },
+  {
+    "problem": "What is the purpose of ARP cache in a host?",
+    "answers": [
+      "To store recent IP-to-MAC address mappings",
+      "To cache DNS lookups",
+      "To store routing tables"
+    ],
+    "correct_answer": "To store recent IP-to-MAC address mappings",
+    "rating": 49
+  },
+  {
+    "problem": "Which mechanism allows multiple devices in a private network to share a single public IP address?",
+    "answers": [
+      "NAT (Network Address Translation)",
+      "ICMP",
+      "ARP"
+    ],
+    "correct_answer": "NAT (Network Address Translation)",
+    "rating": 56
+  },
+  {
+    "problem": "What distinguishes TCP from UDP at the transport layer?",
+    "answers": [
+      "TCP provides reliability and ordering, UDP does not",
+      "UDP provides encryption while TCP does not",
+      "TCP is faster because it skips acknowledgments"
+    ],
+    "correct_answer": "TCP provides reliability and ordering, UDP does not",
+    "rating": 45
+  },
+  {
+    "problem": "Which attack exploits TCP's three-way handshake by sending many SYN requests without completing them?",
+    "answers": [
+      "SYN flood attack",
+      "ARP spoofing",
+      "DNS amplification"
+    ],
+    "correct_answer": "SYN flood attack",
+    "rating": 60
+  },
+  {
+    "problem": "What is the role of the checksum in TCP/IP headers?",
+    "answers": [
+      "To detect errors in transmitted data",
+      "To encrypt packet contents",
+      "To identify the destination port"
+    ],
+    "correct_answer": "To detect errors in transmitted data",
+    "rating": 47
+  },
+  {
+    "problem": "Which port range is reserved for ephemeral (dynamic) ports?",
+    "answers": [
+      "49152\u201365535",
+      "0\u20131023",
+      "1024\u20132048"
+    ],
+    "correct_answer": "49152\u201365535",
+    "rating": 58
+  },
+  {
+    "problem": "What is the primary difference between IPv4 and IPv6?",
+    "answers": [
+      "IPv6 uses 128-bit addresses, IPv4 uses 32-bit addresses",
+      "IPv4 supports encryption while IPv6 does not",
+      "IPv6 only works on local networks"
+    ],
+    "correct_answer": "IPv6 uses 128-bit addresses, IPv4 uses 32-bit addresses",
+    "rating": 62
+  },
+  {
+    "problem": "Which protocol is responsible for reliable file transfer over TCP/IP?",
+    "answers": [
+      "FTP",
+      "ICMP",
+      "ARP"
+    ],
+    "correct_answer": "FTP",
+    "rating": 53
+  },
+  {
+    "problem": "What is a socket in networking terms?",
+    "answers": [
+      "An endpoint defined by IP address and port number",
+      "A physical network connector",
+      "A routing protocol"
+    ],
+    "correct_answer": "An endpoint defined by IP address and port number",
+    "rating": 55
+  },
+  {
+    "problem": "What does 'slow start' refer to in TCP?",
+    "answers": [
+      "A congestion control algorithm that gradually increases transmission rate",
+      "A delay before establishing a connection",
+      "A DNS resolution delay"
+    ],
+    "correct_answer": "A congestion control algorithm that gradually increases transmission rate",
+    "rating": 64
+  },
+  {
+    "problem": "Which protocol uses port 53 by default?",
+    "answers": [
+      "DNS",
+      "SMTP",
+      "SSH"
+    ],
+    "correct_answer": "DNS",
+    "rating": 43
+  },
+  {
+    "problem": "What is the purpose of ICMP 'Destination Unreachable' messages?",
+    "answers": [
+      "To notify the sender that a packet could not reach its destination",
+      "To establish a TCP connection",
+      "To resolve MAC addresses"
+    ],
+    "correct_answer": "To notify the sender that a packet could not reach its destination",
+    "rating": 57
+  },
+  {
+    "problem": "Which layer of the TCP/IP model handles error detection and correction for transmitted frames?",
+    "answers": [
+      "Link layer",
+      "Application layer",
+      "Transport layer"
+    ],
+    "correct_answer": "Link layer",
+    "rating": 51
+  }
+]

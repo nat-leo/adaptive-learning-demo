@@ -1,0 +1,202 @@
+[
+  {
+    "problem": "During TCP fast retransmit, what condition triggers retransmission before the retransmission timeout expires?",
+    "answers": [
+      "Receiving three duplicate ACKs for the same sequence number",
+      "A single ACK with a higher window size",
+      "Expiration of the keepalive timer"
+    ],
+    "correct_answer": "Receiving three duplicate ACKs for the same sequence number",
+    "rating": 78
+  },
+  {
+    "problem": "What is the primary purpose of TCP's selective acknowledgment (SACK) option?",
+    "answers": [
+      "To allow the receiver to inform the sender about all successfully received segments",
+      "To encrypt TCP payloads",
+      "To reduce header size"
+    ],
+    "correct_answer": "To allow the receiver to inform the sender about all successfully received segments",
+    "rating": 82
+  },
+  {
+    "problem": "Which field in the IPv4 header is modified at every hop?",
+    "answers": [
+      "TTL (Time To Live)",
+      "Source IP address",
+      "Header checksum only"
+    ],
+    "correct_answer": "TTL (Time To Live)",
+    "rating": 76
+  },
+  {
+    "problem": "Why must the IPv4 header checksum be recalculated at each hop?",
+    "answers": [
+      "Because the TTL field changes at every hop",
+      "Because the payload is encrypted at each hop",
+      "Because routers modify the destination IP"
+    ],
+    "correct_answer": "Because the TTL field changes at every hop",
+    "rating": 80
+  },
+  {
+    "problem": "What problem does TCP's Nagle's algorithm aim to solve?",
+    "answers": [
+      "Reducing the number of small packets on the network",
+      "Preventing SYN flood attacks",
+      "Increasing DNS resolution speed"
+    ],
+    "correct_answer": "Reducing the number of small packets on the network",
+    "rating": 74
+  },
+  {
+    "problem": "What is the key trade-off introduced by Nagle's algorithm?",
+    "answers": [
+      "Improved bandwidth efficiency at the cost of increased latency",
+      "Lower CPU usage at the cost of higher memory usage",
+      "Reduced reliability at the cost of higher throughput"
+    ],
+    "correct_answer": "Improved bandwidth efficiency at the cost of increased latency",
+    "rating": 79
+  },
+  {
+    "problem": "In TCP congestion control, what does the 'slow start threshold' (ssthresh) determine?",
+    "answers": [
+      "The point at which TCP switches from exponential to linear growth",
+      "The maximum window size allowed",
+      "The initial sequence number"
+    ],
+    "correct_answer": "The point at which TCP switches from exponential to linear growth",
+    "rating": 84
+  },
+  {
+    "problem": "What is the purpose of the 'Don't Fragment' (DF) flag in IPv4?",
+    "answers": [
+      "To prevent routers from fragmenting the packet",
+      "To force fragmentation at every hop",
+      "To enable encryption of fragments"
+    ],
+    "correct_answer": "To prevent routers from fragmenting the packet",
+    "rating": 72
+  },
+  {
+    "problem": "What mechanism allows Path MTU Discovery to function?",
+    "answers": [
+      "ICMP 'Fragmentation Needed' messages",
+      "ARP broadcasts",
+      "TCP retransmissions"
+    ],
+    "correct_answer": "ICMP 'Fragmentation Needed' messages",
+    "rating": 85
+  },
+  {
+    "problem": "What is a key limitation of Path MTU Discovery in real-world networks?",
+    "answers": [
+      "ICMP messages are often blocked by firewalls",
+      "It only works with UDP",
+      "It requires manual configuration on every router"
+    ],
+    "correct_answer": "ICMP messages are often blocked by firewalls",
+    "rating": 88
+  },
+  {
+    "problem": "What is the purpose of ephemeral ports in TCP/IP?",
+    "answers": [
+      "To allow multiple simultaneous connections from a single host",
+      "To identify routers in a network",
+      "To replace MAC addresses"
+    ],
+    "correct_answer": "To allow multiple simultaneous connections from a single host",
+    "rating": 77
+  },
+  {
+    "problem": "In NAT, what problem arises with protocols that embed IP addresses in payloads?",
+    "answers": [
+      "They may break because NAT only modifies headers",
+      "They cannot be routed at all",
+      "They automatically switch to IPv6"
+    ],
+    "correct_answer": "They may break because NAT only modifies headers",
+    "rating": 83
+  },
+  {
+    "problem": "What is TCP TIME_WAIT state primarily used for?",
+    "answers": [
+      "Ensuring delayed packets from a closed connection do not interfere with new connections",
+      "Keeping the connection alive indefinitely",
+      "Speeding up connection teardown"
+    ],
+    "correct_answer": "Ensuring delayed packets from a closed connection do not interfere with new connections",
+    "rating": 86
+  },
+  {
+    "problem": "Why can excessive TIME_WAIT sockets become a problem on servers?",
+    "answers": [
+      "They consume local ports and resources",
+      "They corrupt TCP sequence numbers",
+      "They disable congestion control"
+    ],
+    "correct_answer": "They consume local ports and resources",
+    "rating": 81
+  },
+  {
+    "problem": "What is head-of-line blocking in TCP?",
+    "answers": [
+      "Delay caused by waiting for missing packets before delivering subsequent data",
+      "Dropping packets at the router queue",
+      "Prioritizing certain packets over others"
+    ],
+    "correct_answer": "Delay caused by waiting for missing packets before delivering subsequent data",
+    "rating": 87
+  },
+  {
+    "problem": "Which protocol was designed to address head-of-line blocking issues in HTTP over TCP?",
+    "answers": [
+      "QUIC",
+      "ARP",
+      "ICMP"
+    ],
+    "correct_answer": "QUIC",
+    "rating": 90
+  },
+  {
+    "problem": "What is the primary advantage of QUIC over TCP?",
+    "answers": [
+      "It operates over UDP and enables multiplexed streams without head-of-line blocking",
+      "It eliminates the need for encryption",
+      "It removes the need for congestion control"
+    ],
+    "correct_answer": "It operates over UDP and enables multiplexed streams without head-of-line blocking",
+    "rating": 92
+  },
+  {
+    "problem": "What is the role of the receive window (rwnd) in TCP?",
+    "answers": [
+      "To indicate how much data the receiver can buffer",
+      "To determine routing paths",
+      "To encrypt TCP segments"
+    ],
+    "correct_answer": "To indicate how much data the receiver can buffer",
+    "rating": 75
+  },
+  {
+    "problem": "How does TCP avoid sequence number ambiguity in long-lived connections?",
+    "answers": [
+      "By using a sufficiently large sequence number space and TIME_WAIT delays",
+      "By resetting connections periodically",
+      "By switching to UDP after a timeout"
+    ],
+    "correct_answer": "By using a sufficiently large sequence number space and TIME_WAIT delays",
+    "rating": 94
+  },
+  {
+    "problem": "What is the main function of the sliding window mechanism in TCP?",
+    "answers": [
+      "To control flow and ensure efficient data transmission",
+      "To assign IP addresses dynamically",
+      "To perform DNS lookups"
+    ],
+    "correct_answer": "To control flow and ensure efficient data transmission",
+    "rating": 89
+  }
+]
