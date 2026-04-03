@@ -8,8 +8,9 @@ from .models import Question
 DEFAULT_QUESTIONS = [
     Question(
         prompt="Which data structure uses first-in, first-out ordering?",
-        options=["Stack", "Queue", "Tree", "Set"],
-        answer_index=1,
+        answers=["Queue", "Tree", "Set"],
+        correct_answer="Stack",
+        rating=5
     )
 ]
 
