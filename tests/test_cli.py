@@ -285,16 +285,16 @@ def test_redraw_replaces_screen_instead_of_appending_frames(monkeypatch: pytest.
     state_one = QuizState(
         question=Question(
             prompt="Which layer routes packets between networks?",
-            options=["Application layer", "Internet layer", "Link layer"],
-            answer_index=1,
+            answers=["Application layer", "Internet layer", "Link layer"],
+            correct_answer=1,
         ),
         selected_index=0,
     )
     state_two = QuizState(
         question=Question(
             prompt="Which protocol is connectionless?",
-            options=["TCP", "UDP", "ARP"],
-            answer_index=1,
+            answers=["TCP", "UDP", "ARP"],
+            correct_answer=1,
         ),
         selected_index=1,
     )
@@ -351,8 +351,8 @@ def test_multiple_redraws_do_not_duplicate_static_ui_text(
         QuizState(
             question=Question(
                 prompt="Which layer routes packets between networks?",
-                options=["Application layer", "Internet layer", "Link layer"],
-                answer_index=1,
+                answers=["Application layer", "Internet layer", "Link layer"],
+                correct_answer=1,
             ),
             selected_index=0,
         ),
@@ -363,8 +363,8 @@ def test_multiple_redraws_do_not_duplicate_static_ui_text(
         QuizState(
             question=Question(
                 prompt="Which protocol is connectionless?",
-                options=["TCP", "UDP", "ARP"],
-                answer_index=1,
+                answers=["TCP", "UDP", "ARP"],
+                correct_answer=1,
             ),
             selected_index=1,
         ),

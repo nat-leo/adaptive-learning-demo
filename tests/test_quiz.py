@@ -12,8 +12,8 @@ def test_move_down_advances_selection() -> None:
     state = QuizState(
         question=Question(
             prompt="Prompt",
-            options=["A", "B", "C"],
-            answer_index=1,
+            answers=["A", "B", "C"],
+            correct_answer=1,
         )
     )
 
@@ -26,8 +26,8 @@ def test_move_up_wraps_to_last_option() -> None:
     state = QuizState(
         question=Question(
             prompt="Prompt",
-            options=["A", "B", "C"],
-            answer_index=1,
+            answers=["A", "B", "C"],
+            correct_answer=1,
         )
     )
 
@@ -40,7 +40,7 @@ def test_load_questions_reads_json_array(tmp_path: Path) -> None:
     payload = [
         {
             "prompt": "What is 2 + 2?",
-            "options": ["3", "4", "5"],
+            "answers": ["3", "4", "5"],
             "correct_answer": "4",
         }
     ]
@@ -52,7 +52,7 @@ def test_load_questions_reads_json_array(tmp_path: Path) -> None:
 
     assert len(questions) == 1
     assert questions[0].prompt == "What is 2 + 2?"
-    assert questions[0].answer_index == 1
+    assert questions[0].correct_answer == 1
 
 
 def test_load_questions_accepts_legacy_question_keys(tmp_path: Path) -> None:
@@ -71,8 +71,8 @@ def test_load_questions_accepts_legacy_question_keys(tmp_path: Path) -> None:
 
     assert len(questions) == 1
     assert questions[0].prompt == "Which protocol is connectionless?"
-    assert questions[0].options == ["TCP", "UDP", "ICMP"]
-    assert questions[0].answer_index == 1
+    assert questions[0].answers == ["TCP", "UDP", "ICMP"]
+    assert questions[0].correct_answer == 1
 
 
 def test_load_questions_uses_default_for_empty_file(tmp_path: Path) -> None:
