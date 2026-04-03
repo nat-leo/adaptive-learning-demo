@@ -1,0 +1,6 @@
+-e git+https://github.com/nat-leo/adaptive-learning-demo.git@2c176e5e14a275f7640fb32ab27f5ca73c57355b#egg=adaptive_learning_cli
+iniconfig==2.3.0
+packaging==26.0
+pluggy==1.6.0
+Pygments==2.20.0
+pytest==9.0.2
