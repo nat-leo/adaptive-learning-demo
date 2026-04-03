@@ -20,9 +20,21 @@ def apply_command(state: QuizState, command: Command) -> None:
         state.move_down()
 
 
-def exponential_backoff(times_wrong: int, reintroduced_count: int) -> datetime:
-    delay_minutes = (2 ** reintroduced_count) * times_wrong
-    return datetime.now() + timedelta(minutes=delay_minutes)
+
+def simple_backoff(reintroduciton_streak: int) -> int | None:
+    """
+    Intentionally inverted vs classic SRS:
+    more misses/reintroductions -> shorter delay -> question appears sooner.
+
+    Returns an integer being the minimum number of problems that must be attempted
+    before the problem can be reintroduced. Streaks only last until 6 before the incorrect
+    question can be deleted.
+    """
+    streak = [2, 4, 8, 16, 32, 64]
+    if reintroduciton_streak >= len(streak):
+        raise ValueError(f"simple_backoff(): the streak is {reintroduciton_streak}, max streak is {len(streak)}. Past that the user has correct their mistakes.")
+
+    return streak[reintroduciton_streak]
 
 
 def _question_category(question: Question) -> str:
@@ -70,7 +82,7 @@ class QuizController:
                 )
                 self.user.incorrect_questions[question.id] = tracked
             tracked.mark_wrong()
-            tracked.schedule_next(exponential_backoff)
+            tracked.schedule_next(simple_backoff)
 
         self.score["attempted"] += 1
         session.questions_seen += 1

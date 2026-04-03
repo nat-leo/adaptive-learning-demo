@@ -3,7 +3,6 @@
 from .models import (
     IncorrectQuestion,
     Question,
-    QuestionStatus,
     QuizState,
     SessionData,
     User,
@@ -12,7 +11,6 @@ from .models import (
 __all__ = [
     "IncorrectQuestion",
     "Question",
-    "QuestionStatus",
     "QuizState",
     "SessionData",
     "User",
