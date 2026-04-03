@@ -9,10 +9,10 @@ if __package__ in {None, ""}:
     if str(SRC_ROOT) not in sys.path:
         sys.path.insert(0, str(SRC_ROOT))
 
-    import adaptive_learning_cli.data as data
-    from adaptive_learning_cli.controller import QuizController
-    from adaptive_learning_cli.models import QuizState, Command
-    from adaptive_learning_cli.view import (
+    import adaptive_learning.data as data
+    from adaptive_learning.controller import QuizController
+    from adaptive_learning.models import QuizState, Command
+    from adaptive_learning.view import (
         TerminalView,
         draw_frame as _draw_frame,
         ensure_interactive_terminal as _ensure_interactive_terminal,
@@ -82,7 +82,7 @@ def wait_for_enter() -> bool:
 
 
 def problem_files() -> list[Path]:
-    return sorted((SRC_ROOT / "problems").glob("*.json"))
+    return sorted((SRC_ROOT / "db" / "problems").glob("*.json"))
 
 
 def run_quiz() -> int:

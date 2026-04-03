@@ -19,7 +19,7 @@ test = [
 ]
 
 [project.scripts]
-adaptive-learning = "adaptive_learning_cli.cli:main"
+adaptive-learning = "adaptive_learning.cli:main"
 
 [tool.setuptools]
 package-dir = { "" = "src" }

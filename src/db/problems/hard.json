@@ -1,5 +1,6 @@
 [
   {
+    "id": "hard-1",
     "problem": "During TCP fast retransmit, what condition triggers retransmission before the retransmission timeout expires?",
     "answers": [
       "Receiving three duplicate ACKs for the same sequence number",
@@ -10,6 +11,7 @@
     "rating": 78
   },
   {
+    "id": "hard-2",
     "problem": "What is the primary purpose of TCP's selective acknowledgment (SACK) option?",
     "answers": [
       "To allow the receiver to inform the sender about all successfully received segments",
@@ -20,6 +22,7 @@
     "rating": 82
   },
   {
+    "id": "hard-3",
     "problem": "Which field in the IPv4 header is modified at every hop?",
     "answers": [
       "TTL (Time To Live)",
@@ -30,6 +33,7 @@
     "rating": 76
   },
   {
+    "id": "hard-4",
     "problem": "Why must the IPv4 header checksum be recalculated at each hop?",
     "answers": [
       "Because the TTL field changes at every hop",
@@ -40,6 +44,7 @@
     "rating": 80
   },
   {
+    "id": "hard-5",
     "problem": "What problem does TCP's Nagle's algorithm aim to solve?",
     "answers": [
       "Reducing the number of small packets on the network",
@@ -50,6 +55,7 @@
     "rating": 74
   },
   {
+    "id": "hard-6",
     "problem": "What is the key trade-off introduced by Nagle's algorithm?",
     "answers": [
       "Improved bandwidth efficiency at the cost of increased latency",
@@ -60,6 +66,7 @@
     "rating": 79
   },
   {
+    "id": "hard-7",
     "problem": "In TCP congestion control, what does the 'slow start threshold' (ssthresh) determine?",
     "answers": [
       "The point at which TCP switches from exponential to linear growth",
@@ -70,6 +77,7 @@
     "rating": 84
   },
   {
+    "id": "hard-8",
     "problem": "What is the purpose of the 'Don't Fragment' (DF) flag in IPv4?",
     "answers": [
       "To prevent routers from fragmenting the packet",
@@ -80,6 +88,7 @@
     "rating": 72
   },
   {
+    "id": "hard-9",
     "problem": "What mechanism allows Path MTU Discovery to function?",
     "answers": [
       "ICMP 'Fragmentation Needed' messages",
@@ -90,6 +99,7 @@
     "rating": 85
   },
   {
+    "id": "hard-10",
     "problem": "What is a key limitation of Path MTU Discovery in real-world networks?",
     "answers": [
       "ICMP messages are often blocked by firewalls",
@@ -100,6 +110,7 @@
     "rating": 88
   },
   {
+    "id": "hard-11",
     "problem": "What is the purpose of ephemeral ports in TCP/IP?",
     "answers": [
       "To allow multiple simultaneous connections from a single host",
@@ -110,6 +121,7 @@
     "rating": 77
   },
   {
+    "id": "hard-12",
     "problem": "In NAT, what problem arises with protocols that embed IP addresses in payloads?",
     "answers": [
       "They may break because NAT only modifies headers",
@@ -120,6 +132,7 @@
     "rating": 83
   },
   {
+    "id": "hard-13",
     "problem": "What is TCP TIME_WAIT state primarily used for?",
     "answers": [
       "Ensuring delayed packets from a closed connection do not interfere with new connections",
@@ -130,6 +143,7 @@
     "rating": 86
   },
   {
+    "id": "hard-14",
     "problem": "Why can excessive TIME_WAIT sockets become a problem on servers?",
     "answers": [
       "They consume local ports and resources",
@@ -140,6 +154,7 @@
     "rating": 81
   },
   {
+    "id": "hard-15",
     "problem": "What is head-of-line blocking in TCP?",
     "answers": [
       "Delay caused by waiting for missing packets before delivering subsequent data",
@@ -150,6 +165,7 @@
     "rating": 87
   },
   {
+    "id": "hard-16",
     "problem": "Which protocol was designed to address head-of-line blocking issues in HTTP over TCP?",
     "answers": [
       "QUIC",
@@ -160,6 +176,7 @@
     "rating": 90
   },
   {
+    "id": "hard-17",
     "problem": "What is the primary advantage of QUIC over TCP?",
     "answers": [
       "It operates over UDP and enables multiplexed streams without head-of-line blocking",
@@ -170,6 +187,7 @@
     "rating": 92
   },
   {
+    "id": "hard-18",
     "problem": "What is the role of the receive window (rwnd) in TCP?",
     "answers": [
       "To indicate how much data the receiver can buffer",
@@ -180,6 +198,7 @@
     "rating": 75
   },
   {
+    "id": "hard-19",
     "problem": "How does TCP avoid sequence number ambiguity in long-lived connections?",
     "answers": [
       "By using a sufficiently large sequence number space and TIME_WAIT delays",
@@ -190,6 +209,7 @@
     "rating": 94
   },
   {
+    "id": "hard-20",
     "problem": "What is the main function of the sliding window mechanism in TCP?",
     "answers": [
       "To control flow and ensure efficient data transmission",

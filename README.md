@@ -51,7 +51,7 @@ adaptive-learning
 Or run it directly with a custom question file:
 
 ```bash
-python3.13 -m adaptive_learning_cli practice.json
+python3.13 -m adaptive_learning practice.json
 ```
 
 Run the test suite:
@@ -63,7 +63,7 @@ python3.13 -m pytest
 ## The Design
 This project now uses an MVC architecture:
 
-- Model: [`src/adaptive_learning_cli/models.py`](src/adaptive_learning_cli/models.py) and [`src/adaptive_learning_cli/quiz.py`](src/adaptive_learning_cli/quiz.py) define question data, quiz state, and state transitions.
-- View: [`src/adaptive_learning_cli/view.py`](src/adaptive_learning_cli/view.py) handles terminal input, rendering, redraw behavior, and user-facing feedback text.
-- Controller: [`src/adaptive_learning_cli/controller.py`](src/adaptive_learning_cli/controller.py) owns quiz flow (looping questions, applying commands, scoring, and quit/submit branching).
-- Bootstrap: [`src/adaptive_learning_cli/cli.py`](src/adaptive_learning_cli/cli.py) wires data loading to the controller and preserves CLI entrypoint compatibility.
+- Model: [`src/adaptive_learning/models.py`](src/adaptive_learning/models.py) and [`src/adaptive_learning/quiz.py`](src/adaptive_learning/quiz.py) define question data, quiz state, and state transitions.
+- View: [`src/adaptive_learning/view.py`](src/adaptive_learning/view.py) handles terminal input, rendering, redraw behavior, and user-facing feedback text.
+- Controller: [`src/adaptive_learning/controller.py`](src/adaptive_learning/controller.py) owns quiz flow (looping questions, applying commands, scoring, and quit/submit branching).
+- Bootstrap: [`src/adaptive_learning/cli.py`](src/adaptive_learning/cli.py) wires data loading to the controller and preserves CLI entrypoint compatibility.

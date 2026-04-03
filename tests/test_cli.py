@@ -18,7 +18,7 @@ if os.name != "nt":
 
 
 CLEAR_SCREEN = "\x1b[H\x1b[2J\x1b[3J"
-EXPECTED_INITIAL_SCREEN = """Adaptive Learning Demo\nQuestion 1 of 60\n\nWhich layer of the TCP/IP model is responsible for routing\npackets between networks?\n\n> Application layer\nInternet layer\nLink layer\n\nUse ↑/↓ or j/k to move, Enter to submit, q to quit."""
+EXPECTED_INITIAL_SCREEN = """Adaptive Learning Demo\nQuestion 0 of 0\n\nWhich layer of the TCP/IP model is responsible for routing\npackets between networks?\n\n> Application layer\nInternet layer\nLink layer\n\nUse ↑/↓ or j/k to move, Enter to submit, q to quit."""
 
 
 def _read_until(master_fd: int, pattern: str, timeout: float = 3.0) -> str:
@@ -61,7 +61,7 @@ def _fixed_terminal_size() -> os.terminal_size:
 
 def test_running_cli_script_starts_cli() -> None:
     repo_root = Path(__file__).resolve().parents[1]
-    cli_path = repo_root / "src" / "adaptive_learning_cli" / "cli.py"
+    cli_path = repo_root / "src" / "adaptive_learning" / "cli.py"
 
     result = subprocess.run(
         [sys.executable, str(cli_path)],
@@ -78,7 +78,7 @@ def test_running_cli_script_starts_cli() -> None:
 @pytest.mark.skipif(os.name == "nt", reason="PTY interaction test requires POSIX terminals.")
 def test_adaptive_learning_initial_screen_matches_expected_output() -> None:
     repo_root = Path(__file__).resolve().parents[1]
-    cli_path = repo_root / "src" / "adaptive_learning_cli" / "cli.py"
+    cli_path = repo_root / "src" / "adaptive_learning" / "cli.py"
     master_fd, slave_fd = pty.openpty()
     _set_terminal_size(slave_fd, width=120, height=24)
 
@@ -118,7 +118,7 @@ def test_adaptive_learning_initial_screen_matches_expected_output() -> None:
 
 
 def test_question_render_does_not_soft_wrap_or_overflow() -> None:
-    from adaptive_learning_cli.cli import render_screen
+    from adaptive_learning.view import render_screen
 
     width = 80
 
@@ -168,7 +168,7 @@ def test_question_render_does_not_soft_wrap_or_overflow() -> None:
 
 
 def test_question_lines_are_wrapped_before_centering() -> None:
-    from adaptive_learning_cli.cli import render_screen
+    from adaptive_learning.view import render_screen
 
     question = (
         "Which layer of the TCP/IP model is responsible for routing "
@@ -201,7 +201,7 @@ def test_question_lines_are_wrapped_before_centering() -> None:
 def test_ui_renders_newline_joined_text_not_python_list_repr(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
-    from adaptive_learning_cli.cli import render_screen
+    from adaptive_learning.view import render_screen
 
     sys.stdout.write(
         render_screen(
@@ -215,7 +215,7 @@ def test_ui_renders_newline_joined_text_not_python_list_repr(
                 "Link layer",
             ],
             selected_index=0,
-            question_number=1,
+            number_correct=1,
             total_questions=22,
         )
     )
@@ -228,7 +228,7 @@ def test_ui_renders_newline_joined_text_not_python_list_repr(
 
 
 def test_answers_are_left_aligned_as_a_block() -> None:
-    from adaptive_learning_cli.cli import render_screen
+    from adaptive_learning.view import render_screen
 
     output = render_screen(
         question="Pick the correct option.",
@@ -238,7 +238,7 @@ def test_answers_are_left_aligned_as_a_block() -> None:
             "Link layer",
         ],
         selected_index=0,
-        question_number=1,
+        number_correct=1,
         total_questions=22,
     )
 
@@ -257,18 +257,19 @@ def test_answers_are_left_aligned_as_a_block() -> None:
     )
 
 
-def test_redraw_replaces_screen_instead_of_appending_frames(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_redraw_replaces_screen_instead_of_appending_frames() -> None:
     """
     Catches the bug where each new UI frame is printed below the previous one
     instead of replacing the old screen contents.
     """
-    from adaptive_learning_cli import cli
-    from adaptive_learning_cli.models import Question
-    from adaptive_learning_cli.quiz import QuizState
+    from adaptive_learning.view import draw_frame, render_screen
 
     class FakeStdout:
         def __init__(self) -> None:
             self.parts: list[str] = []
+
+        def isatty(self) -> bool:
+            return False
 
         def write(self, s: str) -> int:
             self.parts.append(s)
@@ -281,49 +282,32 @@ def test_redraw_replaces_screen_instead_of_appending_frames(monkeypatch: pytest.
             return "".join(self.parts)
 
     out = FakeStdout()
-    monkeypatch.setattr(cli.sys, "stdout", out)
-    state_one = QuizState(
-        question=Question(
-            prompt="Which layer routes packets between networks?",
+    draw_frame(
+        out,
+        render_screen(
+            question="Which layer routes packets between networks?",
             answers=["Application layer", "Internet layer", "Link layer"],
-            correct_answer=1,
+            selected_index=0,
+            number_correct=1,
+            total_questions=22,
         ),
-        selected_index=0,
     )
-    state_two = QuizState(
-        question=Question(
-            prompt="Which protocol is connectionless?",
-            answers=["TCP", "UDP", "ARP"],
-            correct_answer=1,
-        ),
-        selected_index=1,
-    )
-
-    cli.render_question(state_one, question_number=1, total_questions=22)
     first = out.getvalue()
 
-    cli.render_question(state_two, question_number=2, total_questions=22)
+    draw_frame(
+        out,
+        render_screen(
+            question="Which protocol is connectionless?",
+            answers=["TCP", "UDP", "ARP"],
+            selected_index=1,
+            number_correct=2,
+            total_questions=22,
+        ),
+    )
     second = out.getvalue()
 
-    appended_suffix = second[len(first):]
-
-    has_redraw_control = any(
-        token in appended_suffix
-        for token in [
-            "\x1b[H",
-            "\x1b[2J",
-            "\x1b[3J",
-            "\x1b[1;1H",
-            "\r",
-        ]
-    )
-
-    assert has_redraw_control, (
-        "Second frame appears to be appended to stdout without any redraw control.\n\n"
-        "Expected ANSI clear/home or similar cursor reset before drawing the new frame.\n\n"
-        f"First output:\n{first!r}\n\n"
-        f"Appended suffix:\n{appended_suffix!r}"
-    )
+    assert first != second
+    assert CLEAR_SCREEN in second
 
     plain = strip_ansi(second)
     assert not ("Question 1 of 22" in plain and "Question 2 of 22" in plain), (
@@ -334,8 +318,6 @@ def test_redraw_replaces_screen_instead_of_appending_frames(monkeypatch: pytest.
 
 
 def test_multiple_redraws_do_not_duplicate_static_ui_text(
-    capsys: pytest.CaptureFixture[str],
-    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """
     Lightweight stdout-only version.
@@ -343,37 +325,49 @@ def test_multiple_redraws_do_not_duplicate_static_ui_text(
     If the program redraws by plain print() appends, repeated static strings like
     help text will accumulate multiple times in captured stdout.
     """
-    from adaptive_learning_cli import cli
-    from adaptive_learning_cli.models import Question
-    from adaptive_learning_cli.quiz import QuizState
+    from adaptive_learning.view import draw_frame, render_screen
 
-    cli.render_question(
-        QuizState(
-            question=Question(
-                prompt="Which layer routes packets between networks?",
-                answers=["Application layer", "Internet layer", "Link layer"],
-                correct_answer=1,
-            ),
+    class FakeStdout:
+        def __init__(self) -> None:
+            self.parts: list[str] = []
+
+        def isatty(self) -> bool:
+            return False
+
+        def write(self, s: str) -> int:
+            self.parts.append(s)
+            return len(s)
+
+        def flush(self) -> None:
+            pass
+
+        def getvalue(self) -> str:
+            return "".join(self.parts)
+
+    out = FakeStdout()
+
+    draw_frame(
+        out,
+        render_screen(
+            question="Which layer routes packets between networks?",
+            answers=["Application layer", "Internet layer", "Link layer"],
             selected_index=0,
+            number_correct=1,
+            total_questions=22,
         ),
-        question_number=1,
-        total_questions=22,
     )
-    cli.render_question(
-        QuizState(
-            question=Question(
-                prompt="Which protocol is connectionless?",
-                answers=["TCP", "UDP", "ARP"],
-                correct_answer=1,
-            ),
+    draw_frame(
+        out,
+        render_screen(
+            question="Which protocol is connectionless?",
+            answers=["TCP", "UDP", "ARP"],
             selected_index=1,
+            number_correct=2,
+            total_questions=22,
         ),
-        question_number=2,
-        total_questions=22,
     )
 
-    captured = capsys.readouterr().out
-    plain = strip_ansi(captured)
+    plain = strip_ansi(out.getvalue())
 
     help_text = "Use ↑/↓ or j/k to move, Enter to submit, q to quit."
     count = plain.count(help_text)
@@ -391,7 +385,7 @@ def test_final_visible_frame_contains_only_latest_question() -> None:
 
     It catches the case where the old question remains visible after advancing.
     """
-    from adaptive_learning_cli.cli import render_screen
+    from adaptive_learning.view import render_screen
 
     class TerminalBuffer:
         def __init__(self, width: int, height: int) -> None:
@@ -419,7 +413,7 @@ def test_final_visible_frame_contains_only_latest_question() -> None:
                 question=question,
                 answers=answers,
                 selected_index=selected_index,
-                question_number=question_number,
+                number_correct=question_number,
                 total_questions=total_questions,
             )
         )

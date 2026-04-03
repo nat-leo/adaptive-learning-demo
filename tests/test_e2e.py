@@ -53,7 +53,7 @@ def _drain_pty_until_exit(master_fd: int, process: subprocess.Popen[str], timeou
 @pytest.mark.skipif(os.name == "nt", reason="PTY interaction test requires POSIX terminals.")
 def test_cli_quits_immediately_when_user_presses_q() -> None:
     repo_root = Path(__file__).resolve().parents[1]
-    cli_path = repo_root / "src" / "adaptive_learning_cli" / "cli.py"
+    cli_path = repo_root / "src" / "adaptive_learning" / "cli.py"
     master_fd, slave_fd = pty.openpty()
 
     process = subprocess.Popen(

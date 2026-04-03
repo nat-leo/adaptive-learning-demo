@@ -1,15 +1,17 @@
 [
   {
+    "id": "medium-1",
     "problem": "During the TCP three-way handshake, which sequence of flags is exchanged between client and server?",
     "answers": [
-      "SYN \u2192 SYN-ACK \u2192 ACK",
-      "ACK \u2192 SYN \u2192 FIN",
-      "SYN \u2192 ACK \u2192 SYN-ACK"
+      "SYN → SYN-ACK → ACK",
+      "ACK → SYN → FIN",
+      "SYN → ACK → SYN-ACK"
     ],
-    "correct_answer": "SYN \u2192 SYN-ACK \u2192 ACK",
+    "correct_answer": "SYN → SYN-ACK → ACK",
     "rating": 42
   },
   {
+    "id": "medium-2",
     "problem": "What happens if a TCP packet is lost during transmission?",
     "answers": [
       "It is ignored and the connection continues",
@@ -20,6 +22,7 @@
     "rating": 44
   },
   {
+    "id": "medium-3",
     "problem": "Which field in the TCP header is used for flow control?",
     "answers": [
       "Window size",
@@ -30,6 +33,7 @@
     "rating": 46
   },
   {
+    "id": "medium-4",
     "problem": "What is the main purpose of the Time To Live (TTL) field in an IP packet?",
     "answers": [
       "To measure latency between hosts",
@@ -40,6 +44,7 @@
     "rating": 48
   },
   {
+    "id": "medium-5",
     "problem": "Which protocol is used to discover the path packets take across networks?",
     "answers": [
       "Traceroute (using ICMP or UDP)",
@@ -50,6 +55,7 @@
     "rating": 50
   },
   {
+    "id": "medium-6",
     "problem": "What is the primary function of the TCP congestion window (cwnd)?",
     "answers": [
       "To control how much data can be sent without acknowledgment",
@@ -60,6 +66,7 @@
     "rating": 52
   },
   {
+    "id": "medium-7",
     "problem": "Which of the following best describes a TCP 'half-open' connection?",
     "answers": [
       "Both sides have closed the connection",
@@ -70,6 +77,7 @@
     "rating": 54
   },
   {
+    "id": "medium-8",
     "problem": "What is the purpose of ARP cache in a host?",
     "answers": [
       "To store recent IP-to-MAC address mappings",
@@ -80,6 +88,7 @@
     "rating": 49
   },
   {
+    "id": "medium-9",
     "problem": "Which mechanism allows multiple devices in a private network to share a single public IP address?",
     "answers": [
       "NAT (Network Address Translation)",
@@ -90,6 +99,7 @@
     "rating": 56
   },
   {
+    "id": "medium-10",
     "problem": "What distinguishes TCP from UDP at the transport layer?",
     "answers": [
       "TCP provides reliability and ordering, UDP does not",
@@ -100,6 +110,7 @@
     "rating": 45
   },
   {
+    "id": "medium-11",
     "problem": "Which attack exploits TCP's three-way handshake by sending many SYN requests without completing them?",
     "answers": [
       "SYN flood attack",
@@ -110,6 +121,7 @@
     "rating": 60
   },
   {
+    "id": "medium-12",
     "problem": "What is the role of the checksum in TCP/IP headers?",
     "answers": [
       "To detect errors in transmitted data",
@@ -120,16 +132,18 @@
     "rating": 47
   },
   {
+    "id": "medium-13",
     "problem": "Which port range is reserved for ephemeral (dynamic) ports?",
     "answers": [
-      "49152\u201365535",
-      "0\u20131023",
-      "1024\u20132048"
+      "49152–65535",
+      "0–1023",
+      "1024–2048"
     ],
-    "correct_answer": "49152\u201365535",
+    "correct_answer": "49152–65535",
     "rating": 58
   },
   {
+    "id": "medium-14",
     "problem": "What is the primary difference between IPv4 and IPv6?",
     "answers": [
       "IPv6 uses 128-bit addresses, IPv4 uses 32-bit addresses",
@@ -140,6 +154,7 @@
     "rating": 62
   },
   {
+    "id": "medium-15",
     "problem": "Which protocol is responsible for reliable file transfer over TCP/IP?",
     "answers": [
       "FTP",
@@ -150,6 +165,7 @@
     "rating": 53
   },
   {
+    "id": "medium-16",
     "problem": "What is a socket in networking terms?",
     "answers": [
       "An endpoint defined by IP address and port number",
@@ -160,6 +176,7 @@
     "rating": 55
   },
   {
+    "id": "medium-17",
     "problem": "What does 'slow start' refer to in TCP?",
     "answers": [
       "A congestion control algorithm that gradually increases transmission rate",
@@ -170,6 +187,7 @@
     "rating": 64
   },
   {
+    "id": "medium-18",
     "problem": "Which protocol uses port 53 by default?",
     "answers": [
       "DNS",
@@ -180,6 +198,7 @@
     "rating": 43
   },
   {
+    "id": "medium-19",
     "problem": "What is the purpose of ICMP 'Destination Unreachable' messages?",
     "answers": [
       "To notify the sender that a packet could not reach its destination",
@@ -190,6 +209,7 @@
     "rating": 57
   },
   {
+    "id": "medium-20",
     "problem": "Which layer of the TCP/IP model handles error detection and correction for transmitted frames?",
     "answers": [
       "Link layer",
