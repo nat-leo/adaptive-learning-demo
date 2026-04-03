@@ -197,7 +197,7 @@ class TerminalView:
             self.stdout,
             render_screen(
                 question=state.question.prompt,
-                answers=state.question.options,
+                answers=state.question.answers,
                 selected_index=state.selected_index,
                 question_number=question_number,
                 total_questions=total_questions,
@@ -209,7 +209,7 @@ class TerminalView:
         if state.is_correct():
             self.stdout.write("Correct.\n")
         else:
-            correct_answer = state.question.options[state.question.answer_index]
+            correct_answer = state.question.answers[state.question.correct_answer]
             self.stdout.write(f"Incorrect. Correct answer: {correct_answer}\n")
         self.stdout.write("Press Enter to continue.\n")
         self.stdout.flush()
