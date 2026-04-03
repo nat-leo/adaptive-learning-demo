@@ -1,11 +1,8 @@
 from __future__ import annotations
-from typing import Literal
 
-from .models import Question, QuizState
+from .models import Question, QuizState, Command
 from .view import TerminalView
 
-
-Command = Literal["up", "down", "submit", "quit", "noop"]
 
 def apply_command(state: QuizState, command: Command) -> None:
     if command == "up":
@@ -16,15 +13,16 @@ def apply_command(state: QuizState, command: Command) -> None:
 
 class QuizController:
     def __init__(self, *, questions: list[Question], view: TerminalView) -> None:
-        self._questions = questions
+        self.questions = sorted(questions, key=lambda question: question.rating)
         self._view = view
+        self.user_score = 0
 
     def run(self) -> int:
         score = 0
-        total_questions = len(self._questions)
+        total_questions = len(self.questions)
 
         with self._view:
-            for number, question in enumerate(self._questions, start=1):
+            for number, question in enumerate(self.questions, start=1):
                 state = QuizState(question=question)
 
                 while True:

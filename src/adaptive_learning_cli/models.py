@@ -1,6 +1,6 @@
 from __future__ import annotations
-
 from dataclasses import dataclass
+from typing import Literal
 
 """
 Question Model
@@ -69,3 +69,5 @@ class QuizState:
 
     def is_correct(self) -> bool:
         return self.selected_index == self.question.correct_answer
+
+Command = Literal["up", "down", "submit", "quit", "noop"]

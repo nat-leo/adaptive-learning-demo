@@ -4,8 +4,7 @@ import os
 import sys
 import textwrap
 
-from .models import QuizState
-from .quiz import Command
+from .models import QuizState, Command
 
 if os.name == "nt":
     import msvcrt
