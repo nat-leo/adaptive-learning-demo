@@ -109,6 +109,7 @@ class QuizController:
                             total_score=self.user.score,
                             total_attempts=self.user.attempts,
                         )
+                        self._view.show_incorrect_questions(self.user.incorrect_questions)
                         self._view.show_early_exit(self.score["correct"], self.score["attempted"])
                         return 1
 
@@ -132,6 +133,7 @@ class QuizController:
                         total_score=self.user.score,
                         total_attempts=self.user.attempts,
                     )
+                    self._view.show_incorrect_questions(self.user.incorrect_questions)
                     self._view.show_early_exit(self.score["correct"], self.score["attempted"])
                     return 1
 
@@ -143,5 +145,6 @@ class QuizController:
             total_score=self.user.score,
             total_attempts=self.user.attempts,
         )
+        self._view.show_incorrect_questions(self.user.incorrect_questions)
         self._view.show_final_score(self.score["correct"], self.score["attempted"])
         return 0

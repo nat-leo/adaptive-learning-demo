@@ -4,7 +4,7 @@ import os
 import sys
 import textwrap
 
-from .models import QuizState, SessionData, Command
+from .models import QuizState, SessionData, IncorrectQuestion, Command
 
 if os.name == "nt":
     import msvcrt
@@ -112,6 +112,33 @@ def render_session_summary(
 
     if total_score is not None and total_attempts is not None:
         lines.append(f"Lifetime Score: {total_score}/{total_attempts}")
+
+    return "\n".join(lines) + "\n"
+
+
+def render_incorrect_questions_summary(incorrect_questions: dict[str, IncorrectQuestion]) -> str:
+    lines = [
+        "Incorrect Questions",
+    ]
+
+    if not incorrect_questions:
+        lines.append("<none>")
+        return "\n".join(lines) + "\n"
+
+    for question_id in sorted(incorrect_questions):
+        item = incorrect_questions[question_id]
+        last_seen = item.last_seen.isoformat() if item.last_seen else "None"
+        due_in = str(item.due_in) if item.due_in else "None"
+        lines.append(
+            (
+                f"- {question_id}: category={item.category}, "
+                f"times_wrong={item.times_wrong}, "
+                f"times_seen_since_wrong={item.times_seen_since_wrong}, "
+                f"reintroduciton_streak={item.reintroduciton_streak}, "
+                f"due_in={due_in}, "
+                f"last_seen={last_seen}"
+            )
+        )
 
     return "\n".join(lines) + "\n"
 
@@ -268,4 +295,8 @@ class TerminalView:
                 total_attempts=total_attempts,
             )
         )
+        self.stdout.flush()
+
+    def show_incorrect_questions(self, incorrect_questions: dict[str, IncorrectQuestion]) -> None:
+        self.stdout.write(render_incorrect_questions_summary(incorrect_questions))
         self.stdout.flush()
