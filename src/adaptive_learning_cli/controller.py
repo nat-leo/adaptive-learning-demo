@@ -1,8 +1,15 @@
 from __future__ import annotations
 
 from .models import Question, QuizState
-from .quiz import apply_command
+from .quiz import Command
 from .view import TerminalView
+
+
+def apply_command(state: QuizState, command: Command) -> None:
+    if command == "up":
+        state.move_up()
+    elif command == "down":
+        state.move_down()
 
 
 class QuizController:

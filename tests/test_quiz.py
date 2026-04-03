@@ -3,9 +3,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from adaptive_learning_cli.controller import apply_command
 from adaptive_learning_cli.data import load_questions
 from adaptive_learning_cli.models import Question
-from adaptive_learning_cli.quiz import QuizState, apply_command
+from adaptive_learning_cli.quiz import QuizState
 
 
 def test_move_down_advances_selection() -> None:
