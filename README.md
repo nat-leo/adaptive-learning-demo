@@ -1,3 +1,5 @@
+<img width="533" height="215" alt="Screenshot 2026-04-07 at 9 25 29 AM" src="https://github.com/user-attachments/assets/37d2ad36-04ea-4628-8475-c2b7072b8382" />
+
 # adaptive-learning-demo
 A little cli tool for solving multiple choice questions.
 
