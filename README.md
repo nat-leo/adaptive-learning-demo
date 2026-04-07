@@ -14,6 +14,7 @@ Run the CLI:
 ```bash
 adaptive-learning
 ```
+<img width="528" height="128" alt="Screenshot 2026-04-07 at 9 27 01 AM" src="https://github.com/user-attachments/assets/270c5797-7f67-4cba-b6e1-a7b7713a0ede" />
 
 ## Question format
 
