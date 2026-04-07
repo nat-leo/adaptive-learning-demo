@@ -12,7 +12,7 @@ A little cli tool for solving multiple choice questions.
 Run the CLI:
 
 ```bash
-adaptive-learning
+./run.sh
 ```
 <img width="528" height="128" alt="Screenshot 2026-04-07 at 9 27 01 AM" src="https://github.com/user-attachments/assets/270c5797-7f67-4cba-b6e1-a7b7713a0ede" />
 
@@ -49,6 +49,12 @@ Run the CLI:
 
 ```bash
 adaptive-learning
+```
+
+Or with one command from a fresh clone:
+
+```bash
+./run.sh
 ```
 
 Or run it directly with a custom question file:
